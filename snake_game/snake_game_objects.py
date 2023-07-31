@@ -6,6 +6,7 @@ def create_screen(back_color, size, window_title):
     my_screen.bgcolor(back_color)
     my_screen.setup(size[0], size[1])
     my_screen.title(window_title)
+    my_screen.tracer(False)
     return my_screen
 
 

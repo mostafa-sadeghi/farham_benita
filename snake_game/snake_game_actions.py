@@ -12,6 +12,16 @@ def move(snake_head):
         ypos -= 20
         snake_head.sety(ypos)
 
+    if snake_head.direction == "left":
+        xpos = snake_head.xcor()
+        xpos -= 20
+        snake_head.setx(xpos)
+
+    if snake_head.direction == "right":
+        xpos = snake_head.xcor()
+        xpos += 20
+        snake_head.setx(xpos)
+
 
 def change_position(food):
     x = randint(-240, 240)
