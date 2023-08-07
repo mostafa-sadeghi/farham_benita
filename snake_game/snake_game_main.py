@@ -15,7 +15,6 @@ change_position(snake_food)
 score_board = create_turtle("square", "orange")
 score_board.ht()
 score_board.goto(0, 260)
-score_board.write(f"Score: {score}",align="center", font=("arial", 22))
 
 
 def change_dir_to_up():
@@ -43,6 +42,8 @@ main_surface.onkeypress(change_dir_to_right, "Right")
 snake_tails = list()
 running = True
 while running:
+    score_board.clear()
+    score_board.write(f"Score: {score}", align="center", font=("arial", 22))
     main_surface.update()
     # collision detection
     if snake_head.distance(snake_food) < 20:
@@ -62,6 +63,10 @@ while running:
     if snake_head.xcor() > 290 or snake_head.xcor() < -290 or snake_head.ycor() > 290 or snake_head.ycor() < -290:
         snake_head.goto(0, 0)
         snake_head.direction = ""
+        for body in snake_tails:
+            body.hideturtle()
+        snake_tails.clear()
+        score = 0
 
     move(snake_head)
     sleep(0.2)
