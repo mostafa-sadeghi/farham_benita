@@ -7,6 +7,7 @@ snake_head = create_turtle("square", "cyan")
 snake_head.direction = ""
 
 score = 0
+high_score = 0
 
 snake_food = create_turtle("circle", "red")
 change_position(snake_food)
@@ -39,15 +40,26 @@ main_surface.onkeypress(change_dir_to_down, "Down")
 main_surface.onkeypress(change_dir_to_left, "Left")
 main_surface.onkeypress(change_dir_to_right, "Right")
 
+def close():
+    global running
+    running = False
+
+
+root = main_surface._root
+root.protocol("WM_DELETE_WINDOW", close)
+
+
 snake_tails = list()
 running = True
 while running:
     score_board.clear()
-    score_board.write(f"Score: {score}", align="center", font=("arial", 22))
+    score_board.write(f"Score: {score}, HighScore: {high_score}", align="center", font=("arial", 22))
     main_surface.update()
     # collision detection
     if snake_head.distance(snake_food) < 20:
         score += 1
+        if score > high_score:
+            high_score = score
         change_position(snake_food)
         new_tail = create_turtle("square", "cyan")
         snake_tails.append(new_tail)
