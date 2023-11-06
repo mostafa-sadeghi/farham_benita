@@ -6,9 +6,6 @@ pygame.init()
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 700
 
-
-
-
 # create main window
 main_screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 # loading image
@@ -27,6 +24,12 @@ title = myfont.render(f'Wolf game', True, (255, 0, 255))
 title_rect = title.get_rect()
 title_rect.top = 0
 title_rect.centerx = WINDOW_WIDTH/2
+
+bg_music = pygame.mixer.Sound("Eggs.wav")
+bg_music.play(-1)
+
+catch_sound = pygame.mixer.Sound("Chomp.wav")
+
 
 score = 0
 score_text = myfont.render(f'Score: {score}', True, (255, 0, 255))
@@ -57,6 +60,7 @@ while running:
     if wolf_rect.colliderect(meat_rect):
         meat_rect.center = (24, random.randint(124, WINDOW_HEIGHT-24))
         score += 1
+        catch_sound.play()
         
     score_text = myfont.render(f'Score: {score}', True, (255, 0, 255))
 
