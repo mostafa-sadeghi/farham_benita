@@ -35,6 +35,9 @@ score = 0
 score_text = myfont.render(f'Score: {score}', True, (255, 0, 255))
 score_rect = score_text.get_rect(topleft=(0,0))
 
+
+
+
 FPS = 60
 clock = pygame.time.Clock()
 
