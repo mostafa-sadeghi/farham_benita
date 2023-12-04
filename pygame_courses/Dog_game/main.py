@@ -1,9 +1,13 @@
+import random
 import pygame
 pygame.init()
 screen = pygame.display.set_mode()
 SCREEN_WIDTH = screen.get_width()
 SCREEN_HEIGHT = screen.get_height()
 FPS = 60
+score = 0
+dog_lives = 3
+
 clock = pygame.time.Clock()
 start_time = pygame.time.get_ticks()
 
@@ -11,9 +15,19 @@ my_font = pygame.font.Font('assets/font.ttf',64)
 welcome_text = my_font.render('Welcome To My Game', True, (255,20,170))
 welcome_rect = welcome_text.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
 
+score_text = my_font.render(f"Score:{score}", True, (10,170,230))
+score_rect = score_text.get_rect(topleft=(0,0))
+
+# TODO تعریف متن برای نمایش دادن جان سگ در بالا و راست صفحه
 
 dog_img = pygame.image.load("assets/dog.png")
 dog_rect = dog_img.get_rect(bottom = SCREEN_HEIGHT, centerx = SCREEN_WIDTH/2)
+
+bone_img = pygame.image.load("assets/bone.png")
+bone_rect = bone_img.get_rect(top = 100, centerx = SCREEN_WIDTH/2)
+
+# pygame.mixer.music.load("اسم فایل صدا")
+# pygame.mixer.music.play(-1)
 
 
 running = True
@@ -27,8 +41,33 @@ while running:
         screen.blit(welcome_text, welcome_rect)
     else:
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+        # حرکت دادن سگ به چهار طرف
+        if keys[pygame.K_LEFT] and dog_rect.left >= 0:
             dog_rect.x -= 5
+
+        if keys[pygame.K_RIGHT] and dog_rect.right <= SCREEN_WIDTH:
+            dog_rect.x += 5
+        if keys[pygame.K_UP] and dog_rect.top > 100:
+            dog_rect.y -= 5
+
+        if keys[pygame.K_DOWN] and dog_rect.bottom <= SCREEN_HEIGHT:
+            dog_rect.y += 5
+
+        # حرکت دادن استخوان
+
+        bone_rect.y += 5
+        if bone_rect.bottom >= SCREEN_HEIGHT:
+            bone_rect.center = (random.randint(32,SCREEN_WIDTH-32), 100-32)
+
+        if dog_rect.colliderect(bone_rect):
+            pass
+            # TODO
+
+        # TODO  هر وقت سگ نتوانست استخوان را بگیرد از جانش یکی کم شود
+        screen.blit(score_text, score_rect)
         screen.blit(dog_img, dog_rect)
+        screen.blit(bone_img, bone_rect)
+    
+    
     pygame.display.update()
     clock.tick(FPS)
